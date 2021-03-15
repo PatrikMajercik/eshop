@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class WatchServiceImpl implements WatchService {
@@ -23,11 +24,11 @@ public class WatchServiceImpl implements WatchService {
     }
 
     @Override
-    public Watch getById(Long id) {
+    public Optional<Watch> findById(Long id) {
         if (id == null) {
             throw new IllegalArgumentException("ID can not be null");
         }
-        return watchRepository.getOne(id);
+        return watchRepository.findById(id);
     }
 
     @Override

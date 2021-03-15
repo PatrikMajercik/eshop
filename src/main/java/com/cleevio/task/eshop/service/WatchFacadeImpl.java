@@ -7,6 +7,7 @@ import org.apache.tomcat.util.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -23,8 +24,8 @@ public class WatchFacadeImpl implements WatchFacade {
     }
 
     @Override
-    public WatchDTO getById(Long id) {
-        return convertToDTO(watchService.getById(id));
+    public Optional<WatchDTO> findById(Long id) {
+        return Optional.ofNullable(convertToDTO(watchService.findById(id)));
     }
 
     @Override
@@ -53,6 +54,19 @@ public class WatchFacadeImpl implements WatchFacade {
     }
 
     private WatchDTO convertToDTO(Watch watch){
+        return WatchDTO.builder()
+                .id(watch.getId())
+                .title(watch.getTitle())
+                .price(watch.getPrice())
+                .imageBase64(Base64.encodeBase64String(watch.getImage()))
+                .description(watch.getDescription())
+                .build();
+    }
+    private WatchDTO convertToDTO(Optional<Watch> optWatch){
+        if(!optWatch.isPresent()){
+            return null;
+        }
+        Watch watch = optWatch.get();
         return WatchDTO.builder()
                 .id(watch.getId())
                 .title(watch.getTitle())

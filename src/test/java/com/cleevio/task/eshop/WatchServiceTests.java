@@ -12,6 +12,8 @@ import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.Optional;
+
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
@@ -71,7 +73,7 @@ class WatchServiceTests {
 
     @Test
     void createAndRetrieve_ShouldCreateAndRetrieve_WhenWatchIdIsNull() {
-        when(watchRepositoryMock.getOne(any(Long.class))).thenReturn(watchWithNullID);
+        when(watchRepositoryMock.findById(any(Long.class))).thenReturn(Optional.of(watchWithNullID));
         doAnswer(invocation-> {
             Object[] args = invocation.getArguments();
             ((Watch)args[0]).setId(1L);
@@ -80,6 +82,6 @@ class WatchServiceTests {
 
         watchService.create(watchWithNullID);
 
-        assertThat(watchService.getById(watchWithNullID.getId())).isEqualTo(watchWithNullID);
+        assertThat(watchService.findById(watchWithNullID.getId()).get()).isEqualTo(watchWithNullID);
     }
 }

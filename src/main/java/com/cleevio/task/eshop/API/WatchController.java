@@ -7,6 +7,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Optional;
+
 @RestController
 @RequestMapping("/api/watch")
 public class WatchController {
@@ -25,10 +27,11 @@ public class WatchController {
 
     @GetMapping("/find/{id}")
     public ResponseEntity<WatchDTO> findUserById(@PathVariable(value = "id") long id) {
-        WatchDTO watchDTO = watchFacade.getById(id);
 
-        if(watchDTO != null) {
-            return ResponseEntity.ok().body(watchDTO);
+        Optional<WatchDTO> watchDTO = watchFacade.findById(id);
+
+        if(watchDTO.isPresent()) {
+            return ResponseEntity.ok().body(watchDTO.get());
         } else {
             return ResponseEntity.notFound().build();
         }

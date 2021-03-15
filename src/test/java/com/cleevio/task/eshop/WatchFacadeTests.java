@@ -3,10 +3,8 @@ package com.cleevio.task.eshop;
 import com.cleevio.task.eshop.API.WatchDTO;
 import com.cleevio.task.eshop.API.WatchFacade;
 import com.cleevio.task.eshop.dao.Watch;
-import com.cleevio.task.eshop.dao.WatchRepository;
 import com.cleevio.task.eshop.service.WatchFacadeImpl;
 import com.cleevio.task.eshop.service.WatchService;
-import com.cleevio.task.eshop.service.WatchServiceImpl;
 import org.apache.tomcat.util.codec.binary.Base64;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -15,7 +13,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+
+import java.util.Optional;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -63,9 +62,9 @@ public class WatchFacadeTests {
             ((Watch)args[0]).setId(1L);
             return null;
         }).when(watchServiceMock).create(any(Watch.class));
-        when(watchServiceMock.getById(any(Long.class))).thenReturn(watchWithNullId);
+        when(watchServiceMock.findById(any(Long.class))).thenReturn(Optional.of(watchWithNullId));
 
         watchFacade.create(watchDTOWithNullId);
-        assertThat(watchFacade.getById(watchDTOWithNullId.getId())).isEqualTo(watchDTOWithNullId);
+        assertThat(watchFacade.findById(watchDTOWithNullId.getId()).get()).isEqualTo(watchDTOWithNullId);
     }
 }
