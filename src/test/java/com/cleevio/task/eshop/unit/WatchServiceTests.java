@@ -27,19 +27,19 @@ class WatchServiceTests {
     WatchRepository watchRepositoryMock;
 
     @InjectMocks
-    private WatchService watchService = new WatchServiceImpl();
+    private final WatchService watchService = new WatchServiceImpl();
 
     private Watch watchWithNoNullAttr1;
     private Watch watchWithNoNullAttr2;
     private Watch watchWithNullID;
 
     @BeforeEach
-    public void tearUp(){
+    public void tearUp() {
         watchWithNoNullAttr1 = Watch.builder()
                 .id(1L)
                 .title("Random title 1")
                 .price(120)
-                .image((new String("Random image1").getBytes()))
+                .image(("Random image1".getBytes()))
                 .description("Random desc 1")
                 .build();
 
@@ -47,7 +47,7 @@ class WatchServiceTests {
                 .id(2L)
                 .title("Random title 2")
                 .price(220)
-                .image((new String("Random image2").getBytes()))
+                .image(("Random image2".getBytes()))
                 .description("Random desc 2")
                 .build();
 
@@ -55,28 +55,31 @@ class WatchServiceTests {
                 .id(null)
                 .title("Random title 1")
                 .price(120)
-                .image((new String("Random image1").getBytes()))
+                .image(("Random image1".getBytes()))
                 .description("Random desc 1")
                 .build();
     }
+
     @Test
     void createWithIdNonNullTest() {
-        assertThrows(IllegalArgumentException.class,()->{
-            watchService.create(watchWithNoNullAttr1);});
+        assertThrows(IllegalArgumentException.class, () -> {
+            watchService.create(watchWithNoNullAttr1);
+        });
     }
 
     @Test
     void updateWithIdNullTest() {
-        assertThrows(IllegalArgumentException.class,()->{
-            watchService.update(watchWithNullID);});
+        assertThrows(IllegalArgumentException.class, () -> {
+            watchService.update(watchWithNullID);
+        });
     }
 
     @Test
     void createAndRetrieve_ShouldCreateAndRetrieve_WhenWatchIdIsNull() {
         when(watchRepositoryMock.findById(any(Long.class))).thenReturn(Optional.of(watchWithNullID));
-        doAnswer(invocation-> {
+        doAnswer(invocation -> {
             Object[] args = invocation.getArguments();
-            ((Watch)args[0]).setId(1L);
+            ((Watch) args[0]).setId(1L);
             return null;
         }).when(watchRepositoryMock).save(any(Watch.class));
 

@@ -3,6 +3,7 @@ package com.cleevio.task.eshop.service;
 import com.cleevio.task.eshop.API.WatchDTO;
 import com.cleevio.task.eshop.API.WatchFacade;
 import com.cleevio.task.eshop.dao.Watch;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.tomcat.util.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,6 +13,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
+@Slf4j
 public class WatchFacadeImpl implements WatchFacade {
 
     @Autowired
@@ -20,6 +22,7 @@ public class WatchFacadeImpl implements WatchFacade {
     @Override
     public void create(WatchDTO watchDTO) {
         Watch watch = convertToEntity(watchDTO);
+        log.debug("Calling service create() with :" + watch);
         watchService.create(watch);
         watchDTO.setId(watch.getId());
     }

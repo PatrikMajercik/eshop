@@ -17,7 +17,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import java.util.Optional;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.when;
@@ -41,7 +40,7 @@ public class WatchFacadeTests {
                 .id(null)
                 .title("Random title 1")
                 .price(120)
-                .image((new String("Random image1").getBytes()))
+                .image(("Random image1".getBytes()))
                 .description("Random desc 1")
                 .build();
 
@@ -56,9 +55,9 @@ public class WatchFacadeTests {
 
     @Test
     void createAndRetrieve_ShouldCreateAndRetrieve_WhenWatchDTOIdIsNull() {
-        doAnswer(invocation-> {
+        doAnswer(invocation -> {
             Object[] args = invocation.getArguments();
-            ((Watch)args[0]).setId(1L);
+            ((Watch) args[0]).setId(1L);
             return null;
         }).when(watchServiceMock).create(any(Watch.class));
         watchFacade.create(watchDTOWithNullId);

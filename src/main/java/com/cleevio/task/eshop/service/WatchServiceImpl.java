@@ -32,7 +32,7 @@ public class WatchServiceImpl implements WatchService {
     }
 
     @Override
-    public void update(Watch watch) {
+    public void update(@NotNull Watch watch) {
         if (watch.getId() == null) {
             throw new IllegalArgumentException("ID must be non-null for creation");
         }
@@ -45,7 +45,7 @@ public class WatchServiceImpl implements WatchService {
     }
 
     @Override
-    public void delete(Watch watch) {
+    public void delete(@NotNull Watch watch) {
         if (watch.getId() != null) {
             throw new IllegalArgumentException("ID can not be null");
         }
