@@ -1,4 +1,4 @@
-package com.cleevio.task.eshop;
+package com.cleevio.task.eshop.unit;
 
 import com.cleevio.task.eshop.API.WatchDTO;
 import com.cleevio.task.eshop.API.WatchFacade;
@@ -24,7 +24,6 @@ import static org.mockito.Mockito.when;
 
 @SpringBootTest
 @RunWith(MockitoJUnitRunner.class)
-
 public class WatchFacadeTests {
 
     @Mock
@@ -39,7 +38,7 @@ public class WatchFacadeTests {
     @BeforeEach
     public void tearUp() {
         watchWithNullId = Watch.builder()
-                .id(1L)
+                .id(null)
                 .title("Random title 1")
                 .price(120)
                 .image((new String("Random image1").getBytes()))
@@ -62,9 +61,10 @@ public class WatchFacadeTests {
             ((Watch)args[0]).setId(1L);
             return null;
         }).when(watchServiceMock).create(any(Watch.class));
-        when(watchServiceMock.findById(any(Long.class))).thenReturn(Optional.of(watchWithNullId));
-
         watchFacade.create(watchDTOWithNullId);
+
+        watchWithNullId.setId(watchDTOWithNullId.getId());
+        when(watchServiceMock.findById(any(Long.class))).thenReturn(Optional.of(watchWithNullId));
         assertThat(watchFacade.findById(watchDTOWithNullId.getId()).get()).isEqualTo(watchDTOWithNullId);
     }
 }

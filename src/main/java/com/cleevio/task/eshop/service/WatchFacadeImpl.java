@@ -6,6 +6,7 @@ import com.cleevio.task.eshop.dao.Watch;
 import org.apache.tomcat.util.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -43,7 +44,7 @@ public class WatchFacadeImpl implements WatchFacade {
         watchService.delete(convertToEntity(watchDTO));
     }
 
-    private Watch convertToEntity(WatchDTO watchDTO){
+    private Watch convertToEntity(WatchDTO watchDTO) {
         return Watch.builder()
                 .id(watchDTO.getId())
                 .title(watchDTO.getTitle())
@@ -53,7 +54,7 @@ public class WatchFacadeImpl implements WatchFacade {
                 .build();
     }
 
-    private WatchDTO convertToDTO(Watch watch){
+    private WatchDTO convertToDTO(Watch watch) {
         return WatchDTO.builder()
                 .id(watch.getId())
                 .title(watch.getTitle())
@@ -62,8 +63,9 @@ public class WatchFacadeImpl implements WatchFacade {
                 .description(watch.getDescription())
                 .build();
     }
-    private WatchDTO convertToDTO(Optional<Watch> optWatch){
-        if(!optWatch.isPresent()){
+
+    private WatchDTO convertToDTO(Optional<Watch> optWatch) {
+        if (!optWatch.isPresent()) {
             return null;
         }
         Watch watch = optWatch.get();

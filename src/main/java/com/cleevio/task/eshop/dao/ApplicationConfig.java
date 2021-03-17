@@ -21,14 +21,12 @@ class ApplicationConfig {
 
     @Bean
     public DataSource dataSource() {
-
         EmbeddedDatabaseBuilder builder = new EmbeddedDatabaseBuilder();
         return builder.setType(EmbeddedDatabaseType.H2).build();
     }
 
     @Bean
     public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
-
         HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
         vendorAdapter.setGenerateDdl(true);
 
@@ -41,7 +39,6 @@ class ApplicationConfig {
 
     @Bean
     public PlatformTransactionManager transactionManager(EntityManagerFactory entityManagerFactory) {
-
         JpaTransactionManager txManager = new JpaTransactionManager();
         txManager.setEntityManagerFactory(entityManagerFactory);
         return txManager;

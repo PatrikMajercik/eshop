@@ -1,4 +1,4 @@
-package com.cleevio.task.eshop;
+package com.cleevio.task.eshop.unit;
 
 import com.cleevio.task.eshop.dao.Watch;
 import com.cleevio.task.eshop.dao.WatchRepository;
